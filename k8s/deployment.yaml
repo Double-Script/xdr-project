@@ -22,7 +22,7 @@ spec:
 
       containers:
       - name: astra-xdr
-        image: mrrobot7781/astra-xdr:latest
+        image: veeruved18/astra-xdr:latest
         imagePullPolicy: Always
 
         ports:
