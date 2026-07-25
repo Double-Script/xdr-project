@@ -41,7 +41,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   # ==========================================
-  # STAGE 2: BUILD DOCKER IMAGE & TRIVY SCAN
+  # STAGE 2: BUILD DOCKER IMAGE & TRIVY  SCAN
   # ==========================================
   container-security:
     name: Docker Build & Trivy Scan
