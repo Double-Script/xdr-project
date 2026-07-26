@@ -114,7 +114,9 @@ jobs:
       - name: Configure kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          cat <<EOF > $HOME/.kube/config
+          ${{ secrets.KUBE_CONFIG }}
+          EOF
 
       - name: Verify Cluster Connection
         run: |
@@ -137,3 +139,8 @@ jobs:
         run: |
           kubectl get pods -n astra
           kubectl get svc -n astra
+
+      - name: Verify kubeconfig file
+        run: |
+          echo "===== KUBECONFIG ====="
+          cat $HOME/.kube/config

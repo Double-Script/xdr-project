@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 
+from ai.analyzer import analyze
+from ai.ai_data import load_analysis
+
 from collectors.cluster import get_cluster_info
 from collectors.pods import get_all_pods
 from collectors.metrics import get_node_metrics, get_pod_metrics
@@ -153,6 +156,25 @@ def receive_falco_events():
 def falco_api():
     return jsonify(falco_events)
 
+
+@app.route("/api/ai/analyze", methods=["POST"])
+def ai_analyze():
+
+    data = request.json
+
+    sonar = data.get("sonar", {})
+    trivy = data.get("trivy", {})
+    falco = data.get("falco", [])
+
+    result = analyze(sonar, trivy, falco)
+
+    return jsonify(result)
+
+
+@app.route("/api/ai")
+def ai_dashboard():
+
+    return jsonify(load_analysis())
 
 # -----------------------------
 # Health Check

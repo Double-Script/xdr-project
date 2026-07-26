@@ -208,5 +208,48 @@ setInterval(() => {
 
     loadDashboard();
     loadFalcoAlerts();
+    loadAI();
 
 }, refreshInterval);
+
+
+async function loadAI() {
+
+    try {
+
+        const response = await fetch("/api/ai");
+
+        const data = await response.json();
+
+        if (!data.risk) return;
+
+        document.getElementById("riskLevel").innerText =
+            data.risk;
+
+        document.getElementById("aiSummary").innerHTML =
+        `
+        Critical : ${data.summary.critical}<br>
+        High : ${data.summary.high}<br>
+        Falco Events : ${data.summary.falco_events}
+        `;
+
+        let html = "";
+
+        data.recommendations.forEach(r => {
+
+            html += `<li>${r}</li>`;
+
+        });
+
+        document.getElementById("recommendations").innerHTML =
+            html;
+
+    }
+
+    catch(e){
+
+        console.log(e);
+
+    }
+
+}
