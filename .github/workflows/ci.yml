@@ -54,7 +54,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t astra-xdr:latest ./app
+          docker build -f app/Dockerfile -t astra-xdr:latest .
 
       - name: Run Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@v0.36.0
